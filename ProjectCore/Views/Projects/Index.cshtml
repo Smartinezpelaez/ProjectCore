@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ProjectCore.Logica.Models.ViewModel.ProjectsIndexViewModel>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Projects</h2>
+
+<!-- LOSLLAMADOS CON LINK POR DEFECTO DIRIGEN A ACCIONES GET -->
+
+@Html.ActionLink(" ", "Create", "Projects", null, new { @class = "btn btn-primary fas fa-plus circle" })
+
+
+<table class="table table-bordered table-responsive">
+    
+    <tr>
+        <td>
+            @Html.DisplayNameFor(model => model.Title) <!-- Display name es para desplegar el texto del campo o la propiedad-->
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.Details)
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayNameFor(model => model.ExpectedCompletionDate)
+        </td>
+
+        <td>
+            @Html.DisplayNameFor(model => model.UpdateAt)
+        </td>
+
+        <td>
+
+        </td>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title) <!-- Displeay for muestra el valor que viene en cada uno de ellos de las propiedades o campos-->
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Details)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedAt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExpectedCompletionDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateAt)
+        </td>
+
+        <td>
+            <!--Lo que se llame en Action link es una accion de tipo Get-->
+            @Html.ActionLink(" ", "Edit", "Projects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-edit" })
+            @Html.ActionLink(" ", "Details", "Projects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-info-circle" })
+            @Html.ActionLink(" ", "Delete", "Projects", new { id = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-trash" })
+
+
+        </td>
+
+    </tr>
+
+
+    }
+
+
+</table>

@@ -1,0 +1,55 @@
+﻿@model ProjectCore.Logica.Models.BindingModel.ProjectsEditBindingModel
+
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form action="/Projects/Edit" method="post">
+
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.LabelFor(Model => Model.Title)
+            @Html.EditorFor(Model => Model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(Model => Model.Title, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.LabelFor(Model => Model.Details)
+            @Html.EditorFor(Model => Model.Details, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(Model => Model.Details, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            @Html.LabelFor(Model => Model.ExpectedCompletionDate)
+            @Html.EditorFor(Model => Model.ExpectedCompletionDate, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(Model => Model.ExpectedCompletionDate, "", new { @class = "text-danger" })
+
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <button type="submit" class="btn-primary">
+                <i class=" fas fa-save"> </i>             
+
+            </button>
+            @Html.ActionLink(" ", "Index", "Projects", null, new { @class = "btn btn-primary fas fa-arrow-circle-left" })
+        </div>
+
+    </div>
+
+</form>
