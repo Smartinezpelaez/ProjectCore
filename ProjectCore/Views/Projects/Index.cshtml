@@ -15,6 +15,8 @@
 <table class="table table-bordered table-responsive">
     
     <tr>
+        <td> Tasks </td>
+
         <td>
             @Html.DisplayNameFor(model => model.Title) <!-- Display name es para desplegar el texto del campo o la propiedad-->
         </td>
@@ -41,6 +43,10 @@
     @foreach (var item in Model)
     {
     <tr>
+        <td>
+            @Html.ActionLink(" ", "Index", "Tasks", new {projectId = item.Id }, new { @class = "btn btn-primary btn-sm fas fa-edit" })
+
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Title) <!-- Displeay for muestra el valor que viene en cada uno de ellos de las propiedades o campos-->
         </td>

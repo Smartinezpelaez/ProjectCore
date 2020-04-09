@@ -42,6 +42,17 @@
                 {
                     <a class="list-group-item list-group-item-action bg-light fas fa-project-diagram" asp-controller="Projects" asp-action="Index"> Projects</a>
 
+                    if (User.IsInRole("Admin"))
+
+                    {
+                    @Html.ActionLink(" Activities", 
+                                     "Index", 
+                                     "Activities", 
+                                      null,
+                                      new {@Class = "list-group-item list-group-item-action bg-light fas fa-tasks" })
+
+                    }
+
                 }
                 else
                 {
