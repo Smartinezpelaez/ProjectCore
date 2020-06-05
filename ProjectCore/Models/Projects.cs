@@ -8,6 +8,7 @@ namespace ProjectCore.Models
         public Projects()
         {
             Artifacts = new HashSet<Artifacts>();
+            Tasks = new HashSet<Tasks>();
             UserProjects = new HashSet<UserProjects>();
         }
 
@@ -21,6 +22,7 @@ namespace ProjectCore.Models
 
         public Tenants Tenant { get; set; }
         public ICollection<Artifacts> Artifacts { get; set; }
+        public ICollection<Tasks> Tasks { get; set; }
         public ICollection<UserProjects> UserProjects { get; set; }
     }
 }

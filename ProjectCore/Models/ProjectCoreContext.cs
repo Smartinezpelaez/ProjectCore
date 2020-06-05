@@ -15,6 +15,7 @@ namespace ProjectCore.Models
         {
         }
 
+        public virtual DbSet<Activities> Activities { get; set; }
         public virtual DbSet<Artifacts> Artifacts { get; set; }
         public virtual DbSet<AspNetRoleClaims> AspNetRoleClaims { get; set; }
         public virtual DbSet<AspNetRoles> AspNetRoles { get; set; }
@@ -24,7 +25,10 @@ namespace ProjectCore.Models
         public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<AspNetUserTokens> AspNetUserTokens { get; set; }
         public virtual DbSet<Members> Members { get; set; }
+        public virtual DbSet<Priorities> Priorities { get; set; }
         public virtual DbSet<Projects> Projects { get; set; }
+        public virtual DbSet<States> States { get; set; }
+        public virtual DbSet<Tasks> Tasks { get; set; }
         public virtual DbSet<Tenants> Tenants { get; set; }
         public virtual DbSet<UserProjects> UserProjects { get; set; }
 
@@ -39,6 +43,13 @@ namespace ProjectCore.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Activities>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
             modelBuilder.Entity<Artifacts>(entity =>
             {
                 entity.Property(e => e.CreatedAt).HasColumnType("datetime");
@@ -151,7 +162,7 @@ namespace ProjectCore.Models
                     .WithMany(p => p.AspNetUsers)
                     .HasForeignKey(d => d.TenantId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__AspNetUse__Tenan__5DCAEF64");
+                    .HasConstraintName("FK__AspNetUse__Tenan__3E1D39E1");
             });
 
             modelBuilder.Entity<AspNetUserTokens>(entity =>
@@ -186,7 +197,14 @@ namespace ProjectCore.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Members)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Members__UserId__5CD6CB2B");
+                    .HasConstraintName("FK__Members__UserId__3D2915A8");
+            });
+
+            modelBuilder.Entity<Priorities>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Projects>(entity =>
@@ -209,6 +227,46 @@ namespace ProjectCore.Models
                     .WithMany(p => p.Projects)
                     .HasForeignKey(d => d.TenantId)
                     .HasConstraintName("FK_Projects_Tenants");
+            });
+
+            modelBuilder.Entity<States>(entity =>
+            {
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Tasks>(entity =>
+            {
+                entity.Property(e => e.Details)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Activity)
+                    .WithMany(p => p.Tasks)
+                    .HasForeignKey(d => d.ActivityId)
+                    .HasConstraintName("FK_Tasks_Activities");
+
+                entity.HasOne(d => d.Priority)
+                    .WithMany(p => p.Tasks)
+                    .HasForeignKey(d => d.PriorityId)
+                    .HasConstraintName("FK_Tasks_Priorities");
+
+                entity.HasOne(d => d.Project)
+                    .WithMany(p => p.Tasks)
+                    .HasForeignKey(d => d.ProjectId)
+                    .HasConstraintName("FK_Tasks_Projects");
+
+                entity.HasOne(d => d.State)
+                    .WithMany(p => p.Tasks)
+                    .HasForeignKey(d => d.StateId)
+                    .HasConstraintName("FK_Tasks_States");
             });
 
             modelBuilder.Entity<Tenants>(entity =>
@@ -242,7 +300,7 @@ namespace ProjectCore.Models
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.UserProjects)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__UserProje__UserI__5BE2A6F2");
+                    .HasConstraintName("FK__UserProje__UserI__3C34F16F");
             });
         }
     }

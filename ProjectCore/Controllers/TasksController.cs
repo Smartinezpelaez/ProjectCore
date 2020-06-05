@@ -54,7 +54,7 @@ namespace ProjectCore.Controllers
         }
 
 
-        [HttpPost]
+       [HttpPost]
         public IActionResult Create (Logica.Models.BindingModel.TasksCreateBindingModel model)
 
         {

@@ -9,22 +9,22 @@ using ProjectCore.DAL.Models;
 
 namespace ProjectCore.Controllers
 {
-    public class ActivitiesController : Controller
+    public class StatesController : Controller
     {
         private readonly ProjectCoreContext _context;
 
-        public ActivitiesController()
+        public StatesController(ProjectCoreContext context)
         {
-            _context = new ProjectCoreContext();
+            _context = context;
         }
 
-        // GET: Activities
+        // GET: States
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Activities.ToListAsync());
+            return View(await _context.States.ToListAsync());
         }
 
-        // GET: Activities/Details/5
+        // GET: States/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities
+            var states = await _context.States
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activities == null)
+            if (states == null)
             {
                 return NotFound();
             }
 
-            return View(activities);
+            return View(states);
         }
 
-        // GET: Activities/Create
+        // GET: States/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        
-        // POST: Activities/Create
-      
+        // POST: States/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Active")] Activities activities)
+        public async Task<IActionResult> Create([Bind("Id,Name,Active")] States states)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(activities);
+                _context.Add(states);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(activities);
+            return View(states);
         }
 
-        // GET: Activities/Edit/5
+        // GET: States/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,21 +72,22 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities.FindAsync(id);
-            if (activities == null)
+            var states = await _context.States.FindAsync(id);
+            if (states == null)
             {
                 return NotFound();
             }
-            return View(activities);
+            return View(states);
         }
 
-        // POST: Activities/Edit/5
-       
+        // POST: States/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Active")] Activities activities)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Active")] States states)
         {
-            if (id != activities.Id)
+            if (id != states.Id)
             {
                 return NotFound();
             }
@@ -95,12 +96,12 @@ namespace ProjectCore.Controllers
             {
                 try
                 {
-                    _context.Update(activities);
+                    _context.Update(states);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivitiesExists(activities.Id))
+                    if (!StatesExists(states.Id))
                     {
                         return NotFound();
                     }
@@ -111,10 +112,10 @@ namespace ProjectCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(activities);
+            return View(states);
         }
 
-        // GET: Activities/Delete/5
+        // GET: States/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -122,30 +123,30 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities
+            var states = await _context.States
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activities == null)
+            if (states == null)
             {
                 return NotFound();
             }
 
-            return View(activities);
+            return View(states);
         }
 
-        // POST: Activities/Delete/5
+        // POST: States/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activities = await _context.Activities.FindAsync(id);
-            _context.Activities.Remove(activities);
+            var states = await _context.States.FindAsync(id);
+            _context.States.Remove(states);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivitiesExists(int id)
+        private bool StatesExists(int id)
         {
-            return _context.Activities.Any(e => e.Id == id);
+            return _context.States.Any(e => e.Id == id);
         }
     }
 }

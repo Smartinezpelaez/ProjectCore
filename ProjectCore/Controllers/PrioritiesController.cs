@@ -9,22 +9,22 @@ using ProjectCore.DAL.Models;
 
 namespace ProjectCore.Controllers
 {
-    public class ActivitiesController : Controller
+    public class PrioritiesController : Controller
     {
         private readonly ProjectCoreContext _context;
 
-        public ActivitiesController()
+        public PrioritiesController(ProjectCoreContext context)
         {
-            _context = new ProjectCoreContext();
+            _context = context;
         }
 
-        // GET: Activities
+        // GET: Priorities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Activities.ToListAsync());
+            return View(await _context.Priorities.ToListAsync());
         }
 
-        // GET: Activities/Details/5
+        // GET: Priorities/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities
+            var priorities = await _context.Priorities
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activities == null)
+            if (priorities == null)
             {
                 return NotFound();
             }
 
-            return View(activities);
+            return View(priorities);
         }
 
-        // GET: Activities/Create
+        // GET: Priorities/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        
-        // POST: Activities/Create
-      
+        // POST: Priorities/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Active")] Activities activities)
+        public async Task<IActionResult> Create([Bind("Id,Name,Active")] Priorities priorities)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(activities);
+                _context.Add(priorities);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(activities);
+            return View(priorities);
         }
 
-        // GET: Activities/Edit/5
+        // GET: Priorities/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,21 +72,22 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities.FindAsync(id);
-            if (activities == null)
+            var priorities = await _context.Priorities.FindAsync(id);
+            if (priorities == null)
             {
                 return NotFound();
             }
-            return View(activities);
+            return View(priorities);
         }
 
-        // POST: Activities/Edit/5
-       
+        // POST: Priorities/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Active")] Activities activities)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Active")] Priorities priorities)
         {
-            if (id != activities.Id)
+            if (id != priorities.Id)
             {
                 return NotFound();
             }
@@ -95,12 +96,12 @@ namespace ProjectCore.Controllers
             {
                 try
                 {
-                    _context.Update(activities);
+                    _context.Update(priorities);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ActivitiesExists(activities.Id))
+                    if (!PrioritiesExists(priorities.Id))
                     {
                         return NotFound();
                     }
@@ -111,10 +112,10 @@ namespace ProjectCore.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(activities);
+            return View(priorities);
         }
 
-        // GET: Activities/Delete/5
+        // GET: Priorities/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -122,30 +123,30 @@ namespace ProjectCore.Controllers
                 return NotFound();
             }
 
-            var activities = await _context.Activities
+            var priorities = await _context.Priorities
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (activities == null)
+            if (priorities == null)
             {
                 return NotFound();
             }
 
-            return View(activities);
+            return View(priorities);
         }
 
-        // POST: Activities/Delete/5
+        // POST: Priorities/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var activities = await _context.Activities.FindAsync(id);
-            _context.Activities.Remove(activities);
+            var priorities = await _context.Priorities.FindAsync(id);
+            _context.Priorities.Remove(priorities);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ActivitiesExists(int id)
+        private bool PrioritiesExists(int id)
         {
-            return _context.Activities.Any(e => e.Id == id);
+            return _context.Priorities.Any(e => e.Id == id);
         }
     }
 }
